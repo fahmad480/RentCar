@@ -5,6 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use \App\Models\User;
+use \App\Models\Role;
+use \App\Models\Car;
+use \App\Models\Rent;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,15 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('roles')->insert([
+        Role::factory()->create([
             'name' => 'admin',
         ]);
 
-        DB::table('roles')->insert([
+        Role::factory()->create([
             'name' => 'user',
         ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Faraaz Ahmad Permadi',
             'email' => 'faraazap@gmail.com',
             'password' => bcrypt('password'),
@@ -31,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Pengguna Satu',
             'email' => 'penggunasatu@gmail.com',
             'password' => bcrypt('password'),
@@ -41,7 +45,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 2,
         ]);
 
-        \App\Models\User::factory()->create([
+        User::factory()->create([
             'name' => 'Pengguna Dua',
             'email' => 'penggunadua@gmail.com',
             'password' => bcrypt('password'),
@@ -51,7 +55,7 @@ class DatabaseSeeder extends Seeder
             'role_id' => 2,
         ]);
 
-        DB::table('cars')->insert([
+        Car::factory()->create([
             'brand' => 'Toyota',
             'model' => 'Avanza',
             'type' => 'MPV',
@@ -66,7 +70,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
-        DB::table('cars')->insert([
+        Car::factory()->create([
             'brand' => 'Toyota',
             'model' => 'Raize',
             'type' => 'SUV',
@@ -81,7 +85,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'available',
         ]);
 
-        DB::table('cars')->insert([
+        Car::factory()->create([
             'brand' => 'KIA',
             'model' => 'Carens',
             'type' => 'MPV',
@@ -96,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'unavailable',
         ]);
 
-        DB::table('rents')->insert([
+        Rent::factory()->create([
             'user_id' => 2,
             'car_id' => 3,
             'date_start' => '2023-10-03',

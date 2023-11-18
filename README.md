@@ -17,3 +17,12 @@ This application is very simple so some feature implementations are made less co
 -   Update .env into correct database configuration
 -   Run `php artisan migrate:fresh --seed`
 -   Run `php artisan serve`
+
+## Account
+
+-   Admin
+    -   email: faraazap@gmail.com
+    -   password: password
+-   User
+    -   email: penggunasatu@gmail.com / penggunadua@gmail.com
+    -   password: password
