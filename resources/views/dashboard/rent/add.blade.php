@@ -143,6 +143,7 @@
 <script>
     $(document).ready(function() {
         $("#car_image_info").hide();
+        $("#user_id").select2();
         show_car_image();
     });
 

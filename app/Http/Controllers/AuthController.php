@@ -59,7 +59,7 @@ class AuthController extends Controller
     }
 
     public function signup() {
-        return view('signup');
+        return view('signup2');
     }
 
     public function signup_action(Request $request)
@@ -70,8 +70,8 @@ class AuthController extends Controller
                 'email' => 'required|string|email|max:100|unique:users',
                 'password' => 'required|string|confirmed|min:6',
                 'address' => 'required|string|between:2,100',
-                'phone' => 'required|string|between:2,100',
-                'drivers_license' => 'required|string|between:2,100',
+                'phone' => 'required|numeric|digits_between:8,12|unique:users',
+                'drivers_license' => 'required|numeric|digits_between:8,50|unique:users',
             ]);
     
             $user = User::create([
