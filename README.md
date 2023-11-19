@@ -16,6 +16,7 @@ This application is very simple so some feature implementations are made less co
 -   Run `cp .env.example .env`
 -   Update .env into correct database configuration
 -   Run `php artisan migrate:fresh --seed`
+-   Run `php artisan storage:link`
 -   Run `php artisan serve`
 
 ## Account
