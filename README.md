@@ -1,5 +1,3 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://github.com/fahmad480/RentCar/blob/main/public/src/images/logo/logo.png?raw=true" width="400" alt="Laravel Logo"></a></p>
-
 ## About Rent Car
 
 RentCar is a simple CRUD application using Laravel 10 and TailwindCSS with simple car rental features, this application is divided into 2 roles, namely the admin and user roles and each role has its own page access rights.
