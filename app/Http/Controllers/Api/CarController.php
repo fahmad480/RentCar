@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Models\Car;
+use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
@@ -36,6 +37,8 @@ class CarController extends Controller
 
     public function store(Request $request) {
         try {
+            DB::beginTransaction();
+
             $this->validate($request, [
                 'brand' => 'required',
                 'model' => 'required',
@@ -44,12 +47,26 @@ class CarController extends Controller
                 'color' => 'required',
                 'year' => 'required|numeric',
                 'machine_number' => 'required',
-                'chassis_number' => 'required',
+                'chasis_number' => 'required',
                 'image' => 'required',
                 'seat' => 'required|numeric',
                 'price' => 'required|numeric',
                 'status' => 'required|in:available,unavailable',
             ]);
+
+            $imagePath = null;
+
+            if($request->hasFile('image')) {
+                $file = $request->file('image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/images', $filename);
+                $imagePath = 'storage/images/' . $filename;
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Car image required.'
+                ], 500);
+            }
 
             $car = new Car();
             $car->brand = $request->brand;
@@ -59,35 +76,43 @@ class CarController extends Controller
             $car->color = $request->color;
             $car->year = $request->year;
             $car->machine_number = $request->machine_number;
-            $car->chassis_number = $request->chassis_number;
-            $car->image = $request->image;
+            $car->chasis_number = $request->chasis_number;
+            $car->image = $imagePath;
             $car->seat = $request->seat;
             $car->price = $request->price;
             $car->status = $request->status;
 
             if($car->save()) {
+                DB::commit();
                 return response()->json([
                     'success' => true,
                     'message' => 'Car created successfully.',
                     'data' => $car
                 ]);
             } else {
+                DB::rollBack();
                 return response()->json([
                     'success' => false,
                     'message' => 'Car could not be created.'
                 ], 500);
             }
         } catch (ValidationException $e) {
+            DB::rollBack();
+            $message = '';
+            foreach($e->errors() as $key => $value) {
+                $message .= $value[0] . " | ";
+            }
             return response()->json([
                 'success' => false,
-                'message' => 'Car could not be created.',
-                'errors' => $e->errors()
+                'message' => $message,
             ], 422);
         }
     }
 
     public function update(Request $request, $id) {
         try {
+            DB::beginTransaction();
+
             $this->validate($request, [
                 'brand' => 'required',
                 'model' => 'required',
@@ -96,8 +121,7 @@ class CarController extends Controller
                 'color' => 'required',
                 'year' => 'required|numeric',
                 'machine_number' => 'required',
-                'chassis_number' => 'required',
-                'image' => 'required',
+                'chasis_number' => 'required',
                 'seat' => 'required|numeric',
                 'price' => 'required|numeric',
                 'status' => 'required|in:available,unavailable',
@@ -112,6 +136,16 @@ class CarController extends Controller
                 ], 400);
             }
 
+            $imagePath = null;
+
+            if($request->hasFile('image')) {
+                $file = $request->file('image');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/images', $filename);
+                $imagePath = 'storage/images/' . $filename;
+                $car->image = $imagePath;
+            }
+
             $car->brand = $request->brand;
             $car->model = $request->model;
             $car->type = $request->type;
@@ -119,25 +153,27 @@ class CarController extends Controller
             $car->color = $request->color;
             $car->year = $request->year;
             $car->machine_number = $request->machine_number;
-            $car->chassis_number = $request->chassis_number;
-            $car->image = $request->image;
+            $car->chasis_number = $request->chasis_number;
             $car->seat = $request->seat;
             $car->price = $request->price;
             $car->status = $request->status;
 
             if($car->save()) {
+                DB::commit();
                 return response()->json([
                     'success' => true,
                     'message' => 'Car updated successfully.',
                     'data' => $car
                 ]);
             } else {
+                DB::rollBack();
                 return response()->json([
                     'success' => false,
                     'message' => 'Car could not be updated.'
                 ], 500);
             }
         } catch (ValidationException $e) {
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => 'Car could not be updated.',
@@ -147,6 +183,7 @@ class CarController extends Controller
     }
 
     public function destroy($id) {
+        DB::beginTransaction();
         $car = Car::find($id);
 
         if(!$car) {
@@ -157,11 +194,13 @@ class CarController extends Controller
         }
 
         if($car->delete()) {
+            DB::commit();
             return response()->json([
                 'success' => true,
                 'message' => 'Car deleted successfully.'
             ]);
         } else {
+            DB::rollBack();
             return response()->json([
                 'success' => false,
                 'message' => 'Car could not be deleted.'

@@ -126,24 +126,24 @@
                                     </div>
 
                                     <div class="mb-1">
-                                        <label for="phone_number" class="form-label">Phone number</label>
-                                        <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                            placeholder="Enter your phone number" aria-describedby="phone_number"
+                                        <label for="phone" class="form-label">Phone number</label>
+                                        <input type="text" class="form-control" id="phone" name="phone"
+                                            placeholder="Enter your phone number" aria-describedby="phone"
                                             tabindex="4" />
                                     </div>
 
                                     <div class="mb-1">
-                                        <label for="driver_license" class="form-label">Driver's License</label>
-                                        <input type="text" class="form-control" id="driver_license"
-                                            name="driver_license" placeholder="Enter your driver's license"
-                                            aria-describedby="driver_license" tabindex="2" />
+                                        <label for="drivers_license" class="form-label">Driver's License</label>
+                                        <input type="text" class="form-control" id="drivers_license"
+                                            name="drivers_license" placeholder="Enter your driver's license"
+                                            aria-describedby="drivers_license" tabindex="5" />
                                     </div>
 
                                     <div class="mb-1">
                                         <label class="form-label" for="password">Password</label>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input type="password" class="form-control form-control-merge" id="password"
-                                                name="password" tabindex="2"
+                                                name="password" tabindex="6"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password" />
                                             <span class="input-group-text cursor-pointer"><i
@@ -155,14 +155,14 @@
                                         <label class="form-label" for="password_confirmation">Re-type Password</label>
                                         <div class="input-group input-group-merge form-password-toggle">
                                             <input type="password" class="form-control form-control-merge"
-                                                id="password_confirmation" name="password_confirmation" tabindex="2"
+                                                id="password_confirmation" name="password_confirmation" tabindex="7"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password_confirmation" />
                                             <span class="input-group-text cursor-pointer"><i
                                                     data-feather="eye"></i></span>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary w-100" tabindex="4" id="signup">Sign
+                                    <button type="submit" class="btn btn-primary w-100" tabindex="8" id="signup">Sign
                                         Up</button>
                                 </form>
 
@@ -212,34 +212,20 @@
             }
         })
 
-        $("#name, #email, #address, #phone_number, #driver_license, #password, #password_confirmation").keyup(function(event) {
-            if (event.keyCode === 13) {
-                $("#signup").click();
-            }
-        });
+        
 
-        $("#signup").click(function() {
-            var name = $("#name").val();
-            var email = $("#email").val();
-            var address = $("#address").val();
-            var phone_number = $("#phone_number").val();
-            var driver_license = $("#driver_license").val();
-            var password = $("#password").val();
-            var password_confirmation = $("#password_confirmation").val();
+        $("#form").submit(function(e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append('_token', '{{ csrf_token() }}');
 
             $.ajax({
                 url: "{{ route('auth.signup_action') }}",
                 type: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    name: name,
-                    email: email,
-                    address: address,
-                    phone: phone_number,
-                    drivers_license: driver_license,
-                    password: password,
-                    password_confirmation: password_confirmation,
-                },
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(data) {
                     Swal.fire({
                         title: "Success!",

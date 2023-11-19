@@ -135,7 +135,7 @@
                                             <label class="form-check-label" for="remember"> Remember Me </label>
                                         </div>
                                     </div>
-                                    <button type="button" class="btn btn-primary w-100" tabindex="4" id="signin">Sign
+                                    <button type="submit" class="btn btn-primary w-100" tabindex="4" id="signin">Sign
                                         In</button>
                                 </form>
 
@@ -184,26 +184,18 @@
                 });
             }
         })
-        $("#email, #password").keyup(function(event) {
-            if (event.keyCode === 13) {
-                $("#signin").click();
-            }
-        });
+        $("#form").submit(function(e) {
+            e.preventDefault();
 
-        $("#signin").click(function() {
-            var email = $("#email").val();
-            var password = $("#password").val();
-            var remember = $("#remember").val();
+            var formData = new FormData(this);
+            formData.append('_token', '{{ csrf_token() }}');
 
             $.ajax({
                 url: "{{ route('auth.signin_action') }}",
                 type: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    email: email,
-                    password: password,
-                    remember: remember,
-                },
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: function(data) {
                     Swal.fire({
                         title: "Success!",

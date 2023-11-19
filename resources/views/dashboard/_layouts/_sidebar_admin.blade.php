@@ -1,128 +1,88 @@
-<aside :class="sidebarToggle ? 'translate-x-0' : '-translate-x-full'"
-    class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
-    @click.outside="sidebarToggle = false">
-    <!-- SIDEBAR HEADER -->
-    <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <a href="{{ route('dashboard') }}">
-            <img src="/src/images/logo/logo.png" alt="Logo" />
-        </a>
-
-        <button class="block lg:hidden" @click.stop="sidebarToggle = !sidebarToggle">
-            <svg class="fill-current" width="20" height="18" viewBox="0 0 20 18" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M19 8.175H2.98748L9.36248 1.6875C9.69998 1.35 9.69998 0.825 9.36248 0.4875C9.02498 0.15 8.49998 0.15 8.16248 0.4875L0.399976 8.3625C0.0624756 8.7 0.0624756 9.225 0.399976 9.5625L8.16248 17.4375C8.31248 17.5875 8.53748 17.7 8.76248 17.7C8.98748 17.7 9.17498 17.625 9.36248 17.475C9.69998 17.1375 9.69998 16.6125 9.36248 16.275L3.02498 9.8625H19C19.45 9.8625 19.825 9.4875 19.825 9.0375C19.825 8.55 19.45 8.175 19 8.175Z"
-                    fill="" />
-            </svg>
-        </button>
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+    <div class="navbar-header">
+        <ul class="nav navbar-nav flex-row">
+            <li class="nav-item me-auto"><a class="navbar-brand" href="{{ route('dashboard') }}"><span
+                        class="brand-logo">
+                        <svg viewbox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" height="24">
+                            <defs>
+                                <lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%"
+                                    y2="89.4879456%">
+                                    <stop stop-color="#000000" offset="0%"></stop>
+                                    <stop stop-color="#FFFFFF" offset="100%"></stop>
+                                </lineargradient>
+                                <lineargradient id="linearGradient-2" x1="64.0437835%" y1="46.3276743%" x2="37.373316%"
+                                    y2="100%">
+                                    <stop stop-color="#EEEEEE" stop-opacity="0" offset="0%"></stop>
+                                    <stop stop-color="#FFFFFF" offset="100%"></stop>
+                                </lineargradient>
+                            </defs>
+                            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="Artboard" transform="translate(-400.000000, -178.000000)">
+                                    <g id="Group" transform="translate(400.000000, 178.000000)">
+                                        <path class="text-primary" id="Path"
+                                            d="M-5.68434189e-14,2.84217094e-14 L39.1816085,2.84217094e-14 L69.3453773,32.2519224 L101.428699,2.84217094e-14 L138.784583,2.84217094e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L6.71554594,44.4188507 C2.46876683,39.9813776 0.345377275,35.1089553 0.345377275,29.8015838 C0.345377275,24.4942122 0.230251516,14.560351 -5.68434189e-14,2.84217094e-14 Z"
+                                            style="fill:currentColor"></path>
+                                        <path id="Path1"
+                                            d="M69.3453773,32.2519224 L101.428699,1.42108547e-14 L138.784583,1.42108547e-14 L138.784199,29.8015838 C137.958931,37.3510206 135.784352,42.5567762 132.260463,45.4188507 C128.736573,48.2809251 112.33867,64.5239941 83.0667527,94.1480575 L56.2750821,94.1480575 L32.8435758,70.5039241 L69.3453773,32.2519224 Z"
+                                            fill="url(#linearGradient-1)" opacity="0.2"></path>
+                                        <polygon id="Path-2" fill="#000000" opacity="0.049999997"
+                                            points="69.3922914 32.4202615 32.8435758 70.5039241 54.0490008 16.1851325">
+                                        </polygon>
+                                        <polygon id="Path-21" fill="#000000" opacity="0.099999994"
+                                            points="69.3922914 32.4202615 32.8435758 70.5039241 58.3683556 20.7402338">
+                                        </polygon>
+                                        <polygon id="Path-3" fill="url(#linearGradient-2)" opacity="0.099999994"
+                                            points="101.428699 0 83.0667527 94.1480575 130.378721 47.0740288">
+                                        </polygon>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg></span>
+                    <h2 class="brand-text">{{ env('APP_NAME') }}</h2>
+                </a></li>
+            <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i
+                        class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i
+                        class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc"
+                        data-ticon="disc"></i></a></li>
+        </ul>
     </div>
-    <!-- SIDEBAR HEADER -->
-
-    <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
-        <!-- Sidebar Menu -->
-        <nav class="mt-5 py-4 px-4 lg:mt-9 lg:px-6" x-data="{selected: $persist('Dashboard')}">
-            <!-- Menu Group -->
-            <div>
-                <h3 class="mb-4 ml-4 text-sm font-medium text-bodydark2">MENU</h3>
-
-                <ul class="mb-6 flex flex-col gap-1.5">
-                    <!-- Menu Item Dashboard -->
-                    <li>
-                        <a class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 {{ ($menu === 'dashboard') ? 'bg-graydark dark:bg-meta-4' : '' }}"
-                            href="{{ route('dashboard') }}">
-                            <i class="fi fi-rr-apps"></i>
-
-                            Dashboard
-                        </a>
+    <div class="shadow-bottom"></div>
+    <div class="main-menu-content">
+        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+            <li class="{{ @$menu == "dashboard" ? "active" : "" }} nav-item"><a class="d-flex align-items-center"
+                    href="{{ route('dashboard') }}"><i data-feather="home"></i><span class="menu-title text-truncate"
+                        data-i18n="Dashboards">Dashboards</span></a>
+            </li>
+            <li class=" navigation-header"><span data-i18n="Main Menu">Main Menu</span><i
+                    data-feather="more-horizontal"></i>
+            </li>
+            <li class="{{ Str::contains(@$menu, "car") ? "active open" : ""  }} nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="truck"></i><span
+                        class="menu-title text-truncate" data-i18n="Car">Car</span></a>
+                <ul class="menu-content">
+                    <li class="{{ @$menu == "carList" ? "active" : "" }}"><a class="d-flex align-items-center" href="{{ route('car.index') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate" data-i18n="Car List">Car
+                                List</span></a>
                     </li>
-                    <!-- Menu Item Dashboard -->
-
-                    <!-- Menu Item Car -->
-                    <li>
-                        <a class="group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                            href="#" @click.prevent="selected = (selected === 'Car' ? '':'Car')"
-                            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Car') || (page === 'carIndex' || page === 'carStore') }">
-                            <i class="fi fi-rr-car-side"></i>
-
-                            Car
-
-                            <svg class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
-                                :class="{ 'rotate-180': (selected === 'Car') }" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                    fill="" />
-                            </svg>
-                        </a>
-
-                        <!-- Dropdown Menu Start -->
-                        <div class="overflow-hidden" :class="(selected === 'Car') ? 'block' :'hidden'">
-                            <ul class="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                                <li>
-                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white {{ ($menu === 'carList') ? '!text-white' : '' }}"
-                                        href="{{ route('car.index') }}">Car List</a>
-                                </li>
-                                <li>
-                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white {{ ($menu === 'carAdd') ? '!text-white' : '' }}"
-                                        href="{{ route('car.store') }}">Add New Car</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Dropdown Menu End -->
+                    <li class="{{ @$menu == "carAdd" ? "active" : "" }}"><a class="d-flex align-items-center" href="{{ route('car.store') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="Add New Car">Add New Car</span></a>
                     </li>
-                    <!-- Menu Item Car -->
-
-                    <!-- Menu Item Rent -->
-                    <li>
-                        <a class=" group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium
-                                        text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-                            href="#" @click.prevent="selected = (selected === 'Rent' ? '':'Rent')"
-                            :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Rent') || (page === 'rentIndex' || page === 'rentStore') }">
-                            <i class="fi fi-rr-car-building"></i>
-
-                            Rent
-
-                            <svg class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
-                                :class="{ 'rotate-180': (selected === 'Rent') }" width="20" height="20"
-                                viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
-                                    fill="" />
-                            </svg>
-                        </a>
-
-                        <!-- Dropdown Menu Start -->
-                        <div class="overflow-hidden" :class="(selected === 'Rent') ? 'block' :'hidden'">
-                            <ul class="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
-                                <li>
-                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white {{ ($menu === 'rentList') ? '!text-white' : '' }}"
-                                        href="{{ route('rent.index') }}">Rent List</a>
-                                </li>
-                                <li>
-                                    <a class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white {{ ($menu === 'rentAdd') ? '!text-white' : '' }}"
-                                        href="{{ route('rent.store') }}">Add New Rent</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Dropdown Menu End -->
-                    </li>
-                    <!-- Menu Item Rent -->
                 </ul>
-            </div>
-        </nav>
-        <!-- Sidebar Menu -->
-
-        <!-- Promo Box -->
-        <div
-            class="mx-auto mb-10 w-full max-w-60 rounded-sm border border-strokedark bg-boxdark py-6 px-4 text-center shadow-default">
-            <h3 class="mb-1 font-semibold text-white">{{ getenv("APP_NAME") }}</h3>
-            <p class="mb-4 text-xs">Created by <a href="https://www.linkedin.com/in/faraazahmadpermadi/">Faraaz Ahmad
-                    Permadi</a></p>
-            <a href="https://www.linkedin.com/in/faraazahmadpermadi/" target="_blank" rel="nofollow"
-                class="flex items-center justify-center rounded-md bg-primary p-2 text-white hover:bg-opacity-95">
-                Visit My LinkedIn
-            </a>
-        </div>
-        <!-- Promo Box -->
+            </li>
+            <li class="{{ Str::contains(@$menu, "rent") ? "active open" : ""  }} nav-item"><a class="d-flex align-items-center" href="#"><i data-feather="file-plus"></i><span
+                        class="menu-title text-truncate" data-i18n="Rent">Rent</span></a>
+                <ul class="menu-content">
+                    <li class="{{ @$menu == "rentList" ? "active" : "" }}"><a class="d-flex align-items-center" href="{{ route('rent.index') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="Ren List">Rent List</span></a>
+                    </li>
+                    <li class="{{ @$menu == "rentAdd" ? "active" : "" }}"><a class="d-flex align-items-center" href="{{ route('rent.store') }}"><i
+                                data-feather="circle"></i><span class="menu-item text-truncate"
+                                data-i18n="Rent a Car">Rent a Car</span></a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
     </div>
-</aside>
+</div>

@@ -1,59 +1,78 @@
 @extends('dashboard._layouts._app')
 
 @section('content')
-<main>
-    <div class="max-w-screen-2xl mx-auto p-4 md:p-6 2xl:p-10">
-        <!-- Breadcrumb Start -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-            <h2 class="font-semibold text-title-md2 text-black dark:text-white">Rent List</h2>
-
-            <nav>
-                <ol class="flex items-center gap-2">
-                    <li><a href="{{ route('dashboard') }}">Dashboard /</a></li>
-                    <li>Rent /</li>
-                    <li class="text-primary"><a href="{{ route('rent.index') }}" class="text-primary">Rent List</a></li>
-                </ol>
-            </nav>
-        </div>
-        <!-- Breadcrumb End -->
-
-        <!-- ====== Table Section Start -->
-        <div class="flex flex-col gap-10">
-            <!-- ====== Table One Start -->
-            <div
-                class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-
-                <div class="flex flex-col">
-                    <table id="tbl_list" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Car</th>
-                                <th>User</th>
-                                <th>Date Start</th>
-                                <th>Date End</th>
-                                <th>Date Return</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">{{ $title }}</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboards</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Rent</a>
+                                </li>
+                                <li class="breadcrumb-item active">Rent List
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- ====== Table One End -->
         </div>
-        <!-- ====== Table Section End -->
+        <div class="content-body">
+            <!-- Basic table -->
+            <section id="basic-datatable">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="tbl_list" class="datatables-basic table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Car</th>
+                                            <th>User</th>
+                                            <th>Date Start</th>
+                                            <th>Date End</th>
+                                            <th>Date Return</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ Basic table -->
+        </div>
     </div>
-</main>
+</div>
 @endsection
 
 @push('scripts')
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="/assets/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/responsive.bootstrap5.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/jszip.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/pdfmake.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/vfs_fonts.js"></script>
+<script src="/assets/vendors/js/tables/datatable/buttons.html5.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/buttons.print.min.js"></script>
+<script src="/assets/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var formatter = new Intl.NumberFormat('id-ID', {
@@ -83,13 +102,16 @@
                     }
                 }},
                 {data: null, name: 'action', orderable: false, searchable: false, render: function(data, type, full, meta){
-                    $output = "<a href=\"javascript:void(0)\" onClick=\"showRent('" + full.car + "', '" + full.user + "', '" + full.date_start + "', '" + full.date_end + "', '" + full.date_return + "', '" + full.total_price + "', '" + full.status + "')\" class=\"hover:text-primary\" title=\"View Details\"><i class=\"fi fi-rr-eye\"></i></a>&nbsp;&nbsp;";
+                    $output = "<a href=\"javascript:void(0)\" onClick=\"showRent('" + full.car + "', '" + full.user + "', '" + full.date_start + "', '" + full.date_end + "', '" + full.date_return + "', '" + full.total_price + "', '" + full.status + "')\" class=\"text-primary\" title=\"View Details\"><i data-feather=\"eye\"></i></a>&nbsp;&nbsp;";
                     if (full.status == "in rental" && "{{ session('role') }}" == "admin") {
-                        $output += "<a href=\"javascript:void(0)\" onClick=\"returnCar(" + full.id + ")\" class=\"hover:text-primary\"> <i class=\"fi fi-rr-car-garage\" title=\"Return the Car\"></i></a>&nbsp;&nbsp;";
+                        $output += "<a href=\"javascript:void(0)\" onClick=\"returnCar(" + full.id + ")\" class=\"text-primary\"> <i data-feather=\"corner-down-left\" title=\"Return the Car\"></i></a>&nbsp;&nbsp;";
                     }
                     return $output;
                 }},
-            ]
+            ],
+            drawCallback: function () {
+                feather.replace();
+            }
         });
     });
 
@@ -179,27 +201,10 @@
 @endpush
 
 @push('styles')
-<style>
-    /* Custom styling for search input */
-    .dataTables_wrapper .dataTables_filter input {
-        width: 300px;
-        /* Sesuaikan lebar input sesuai kebutuhan Anda */
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-
-    /* Custom styling for select input (entries per page) */
-    .dataTables_wrapper .dataTables_length select {
-        width: 100px;
-        /* Sesuaikan lebar input sesuai kebutuhan Anda */
-        padding: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
 <style>
     .modal-table {
         font-family: arial, sans-serif;

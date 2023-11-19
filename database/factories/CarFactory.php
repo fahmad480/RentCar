@@ -24,7 +24,7 @@ class CarFactory extends Factory
             'color' => $this->faker->word,
             'year' => $this->faker->year($max = 'now'),
             'machine_number' => $this->faker->word,
-            'chassis_number' => $this->faker->word,
+            'chasis_number' => $this->faker->word,
             'image' => $this->faker->word,
             'seat' => $this->faker->word,
             'price' => $this->faker->word,

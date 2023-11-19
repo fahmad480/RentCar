@@ -59,7 +59,7 @@ class AuthController extends Controller
     }
 
     public function signup() {
-        return view('signup2');
+        return view('signup');
     }
 
     public function signup_action(Request $request)
@@ -99,7 +99,7 @@ class AuthController extends Controller
         } catch (ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Wrong email or password!',
+                'message' => 'Register failed!',
                 'errors' => $e->errors()
             ], 500);
         } catch (\Exception $e) {

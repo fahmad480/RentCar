@@ -22,7 +22,7 @@ class Car extends Model
         'color',
         'year',
         'machine_number',
-        'chassis_number',
+        'chasis_number',
         'image',
         'seat',
         'price',

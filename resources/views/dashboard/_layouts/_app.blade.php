@@ -43,6 +43,7 @@
 
     <!-- BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/assets/vendors/css/forms/select/select2.min.css">
     @stack('styles')
     <!-- END: Custom CSS-->
 
@@ -55,15 +56,15 @@
     data-menu="vertical-menu-modern" data-col="">
 
     <!-- BEGIN: Header-->
-    @include('dashboard._layouts._header2')
+    @include('dashboard._layouts._header')
     <!-- END: Header-->
 
 
     <!-- BEGIN: Main Menu-->
     @if (session('role') == 'admin')
-    @include('dashboard._layouts._sidebar_admin2')
+    @include('dashboard._layouts._sidebar_admin')
     @else
-    @include('dashboard._layouts._sidebar2')
+    @include('dashboard._layouts._sidebar')
     @endif
     <!-- END: Main Menu-->
 
@@ -82,6 +83,7 @@
     <!-- BEGIN: Vendor JS-->
     <script src="/assets/vendors/js/vendors.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/assets/vendors/js/forms/select/select2.full.min.js"></script>
     <!-- BEGIN Vendor JS-->
 
     <!-- BEGIN: Page Vendor JS-->

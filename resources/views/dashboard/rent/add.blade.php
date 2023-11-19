@@ -1,149 +1,118 @@
 @extends('dashboard._layouts._app')
 
 @section('content')
-<main>
-    <div class="max-w-screen-2xl mx-auto p-4 md:p-6 2xl:p-10">
-        <!-- Breadcrumb Start -->
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
-            <h2 class="font-semibold text-title-md2 text-black dark:text-white">{{ $title }}</h2>
-
-            <nav>
-                <ol class="flex items-center gap-2">
-                    <li><a href="{{ route('dashboard') }}">Dashboard /</a></li>
-                    <li>Rent /</li>
-                    <li class="text-primary"><a href="{{ route('rent.store') }}" class="text-primary">{{ $title }}</a>
-                    </li>
-                </ol>
-            </nav>
-        </div>
-        <!-- Breadcrumb End -->
-
-        <!-- ====== Table Section Start -->
-        <div class="flex flex-col gap-10">
-            <!-- ====== Table One Start -->
-            <div
-                class="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-
-                <div class="flex flex-col">
-                    <form>
-                        <div class="p-6.5">
-                            <div class="mb-4.5">
-                                <label class="mb-2.5 block text-black dark:text-white">
-                                    Select User <span class="text-meta-1">*</span>
-                                </label>
-                                <div class="relative z-20 bg-white dark:bg-form-input">
-                                    <span class="absolute top-1/2 left-4 z-30 -translate-y-1/2">
-                                        <i class="fi fi-rr-user"></i>
-                                    </span>
-                                    <select name="user_id" id="user_id"
-                                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
-                                        @foreach($users as $u)
-                                        <option value="{{ $u->id }}">{{ $u->name . " (" . $u->email . ")" }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="absolute top-1/2 right-4 z-10 -translate-y-1/2">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g opacity="0.8">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                                    fill="#637381"></path>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="mb-4.5">
-                                <label class="mb-2.5 block text-black dark:text-white">
-                                    Select Car <span class="text-meta-1">*</span>
-                                </label>
-                                <div class="relative z-20 bg-white dark:bg-form-input">
-                                    <span class="absolute top-1/2 left-4 z-30 -translate-y-1/2">
-                                        <i class="fi fi-rr-car-side"></i>
-                                    </span>
-                                    <select name="car_id" id="car_id"
-                                        class="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-12 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input">
-                                        @foreach($cars as $c)
-                                        <option value="{{ $c->id }}">{{ $c->brand }} {{ $c->model }} {{ $c->type
-                                            }} {{ $c->seat }} seats ({{ $c->year }}) | Rp {{ number_format($c->price, 0,
-                                            ',', '.') }}/day</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="absolute top-1/2 right-4 z-10 -translate-y-1/2">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <g opacity="0.8">
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
-                                                    fill="#637381"></path>
-                                            </g>
-                                        </svg>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="mb-4.5" id="car_image_info">
-                                <label class="mb-2.5 block text-black dark:text-white">
-                                    Car Image
-                                </label>
-                                <div class="relative z-20 bg-white dark:bg-form-input">
-                                    <center><img src="#" id="car_image" alt="Car Image" style="max-height: 250px;">
-                                    </center>
-                                </div>
-                            </div>
-
-                            <div class="mb-4.5">
-                                <label class="block text-black dark:text-white">
-                                    Date Start <span class="text-meta-1">*</span>
-                                </label>
-                                <div class="mt-2.5 relative">
-                                    <input type="date" id="date_start" name="date_start"
-                                        class="custom-input-date custom-input-date-1 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                                </div>
-                            </div>
-
-                            <div class="mb-4.5">
-                                <label class="block text-black dark:text-white">
-                                    Date End <span class="text-meta-1">*</span>
-                                </label>
-                                <div class="mt-2.5 relative">
-                                    <input type="date" id="date_end" name="date_end"
-                                        class="custom-input-date custom-input-date-1 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                                </div>
-                            </div>
-
-                            <div class="mb-4.5">
-                                <label class="mb-2.5 block text-black dark:text-white">
-                                    Estimated Price
-                                </label>
-                                <input type="text" placeholder="Estimated Price" id="estimated_price" readonly
-                                    name="estimated_price" class="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium
-                                outline-none transition focus:border-primary active:border-primary
-                                disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark
-                                dark:bg-form-input dark:focus:border-primary">
-                            </div>
-
-                            <button class="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray"
-                                id="addnewrent">
-                                {{ $menu === "rentUpdate" ? "Update Rent Information" : "Rent a Car" }}
-                            </button>
+<div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+        <div class="content-header row">
+            <div class="content-header-left col-md-9 col-12 mb-2">
+                <div class="row breadcrumbs-top">
+                    <div class="col-12">
+                        <h2 class="content-header-title float-start mb-0">{{ $title }}</h2>
+                        <div class="breadcrumb-wrapper">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboards</a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Car</a>
+                                </li>
+                                <li class="breadcrumb-item active">Rent a Car
+                                </li>
+                            </ol>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-            <!-- ====== Table One End -->
         </div>
-        <!-- ====== Table Section End -->
+        <div class="content-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="form" enctype="multipart/form-data">
+                                <div class="col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="user_id">User</label>
+                                        <select class="form-select" id="user_id" name="user_id">
+                                            <option value="">-- Select User --</option>
+                                            @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="car_id">Car</label>
+                                        <select class="form-select" id="car_id" name="car_id">
+                                            <option value="">-- Select Car --</option>
+                                            @foreach ($cars as $car)
+                                            <option value="{{ $car->id }}">{{ $car->brand . " " . $car->model . " " .
+                                                $car->type . " (" . $car->color . ") IDR " .
+                                                number_format($car->price) . "/day"}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-1" id="preview"></div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="date_start">Date Start - End</label>
+                                        <input type="text" id="date" name="date" class="form-control flatpickr-range"
+                                            placeholder="YYYY-MM-DD to YYYY-MM-DD" />
+                                        <input type="hidden" id="date_start" name="date_start" />
+                                        <input type="hidden" id="date_end" name="date_end" />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-1">
+                                        <label class="form-label" for="date_start">Estimated Price</label>
+                                        <input type="text" id="estimated_price" name="estimated_price"
+                                            class="form-control" readonly />
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="mb-1">
+                                            <button type="submit" class="btn btn-primary" id="addnewrent">Rent a
+                                                car</button>
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</main>
+</div>
 @endsection
 
 @push('scripts')
+<script src="/assets/vendors/js/pickers/pickadate/picker.js"></script>
+<script src="/assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+<script src="/assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+<script src="/assets/vendors/js/pickers/pickadate/legacy.js"></script>
+<script src="/assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 <script>
     $(document).ready(function() {
         $("#car_image_info").hide();
-        $("#user_id").select2();
+        $("#user_id").select2({
+            
+        });
+        $("#car_id").select2({
+            
+        });
+        $("#date").flatpickr({
+            mode: "range",
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            onChange: function(selectedDates, dateStr, instance) {
+                var date_start = dateStr.split(" to ")[0];
+                var date_end = dateStr.split(" to ")[1];
+                $("#date_start").val(date_start);
+                $("#date_end").val(date_end);
+                calculate_estimated_price();
+            }
+        });
         show_car_image();
     });
 
@@ -233,8 +202,15 @@
             type: "GET",
             dataType: "json",
             success: function(response) {
-                $("#car_image_info").show();
-                $("#car_image").attr("src", response.data.image);
+                var preview = $("#preview");
+                if (response.data.image.startsWith("http")) {
+                    preview.html(
+                        '<img src="' + response.data.image + '" class="img-fluid rounded" alt="Car Image" />'
+                    );
+                } else {
+                    preview.html(
+                    '<img src="{{ url('') }}/' + response.data.image + '" style="max-height: 300px;">');
+                }
             },
         });
     }
@@ -242,4 +218,7 @@
 @endpush
 
 @push('styles')
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/pickers/pickadate/pickadate.css">
+<link rel="stylesheet" type="text/css" href="/assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+<link rel="stylesheet" type="text/css" href="/assets/css/plugins/forms/pickers/form-pickadate.css">
 @endpush

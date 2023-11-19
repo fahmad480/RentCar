@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('color');
             $table->string('year');
             $table->string('machine_number');
-            $table->string('chassis_number');
+            $table->string('chasis_number');
             $table->string('image');
             $table->string('seat');
             $table->string('price');
